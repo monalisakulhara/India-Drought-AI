@@ -27,12 +27,12 @@ def init_ee():
             # We use the secret key to log in
             credentials = ee.ServiceAccountCredentials(
                 st.secrets["EE_CREDENTIALS"]["client_email"],
-                st.secrets["EE_CREDENTIALS"]["private_key"].replace('\\n', '\n')
+                key_data=st.secrets["EE_CREDENTIALS"]["private_key"].replace('\\n', '\n')
             )
-            ee.Initialize(credentials, project='your-project-id') # <-- STILL PUT YOUR PROJECT ID HERE
+            ee.Initialize(credentials, project='drought-detection-490815') # <-- STILL PUT YOUR PROJECT ID HERE
         else:
             # 2. Fallback for your local laptop
-            ee.Initialize(project='your-project-id') # <-- STILL PUT YOUR PROJECT ID HERE
+            ee.Initialize(project='drought-detection-490815') # <-- STILL PUT YOUR PROJECT ID HERE
         return True
     except Exception as e:
         st.error(f"Earth Engine Connection Failed: {e}")
