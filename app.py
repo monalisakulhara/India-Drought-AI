@@ -38,8 +38,12 @@ def init_ee():
         st.error(f"Earth Engine Connection Failed: {e}")
         return False
 @st.cache_resource
-def load_model():
-    return joblib.load('pan_india_drought_model_atlas.joblib')
+def load_models():
+    # Load the Authentic Detection model
+    detect_model = joblib.load('pan_india_drought_model_authentic.joblib')
+    # Load the new Forecasting model
+    forecast_model = joblib.load('pan_india_1_month_forecaster.joblib')
+    return detect_model, forecast_model
 
 # Helper function to generate Earth Engine Map Tiles
 def get_ee_url(image, vis_params):
@@ -47,7 +51,7 @@ def get_ee_url(image, vis_params):
     return map_id_dict['tile_fetcher'].url_format
 
 ee_ready = init_ee()
-model = load_model()
+detect_model, forecast_model = load_models()
 
 # ==========================================
 # 3. SIDEBAR & DATA SOURCES (Req 8)
